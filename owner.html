@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Owner Panel Jack Tech">
+    <title>Owner - Jack Tech</title>
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Owner Jack Tech">
+    <meta name="theme-color" content="#f8f9fa">
+    <meta name="color-scheme" content="dark light">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/png" sizes="192x192" href="./assets/images/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="./assets/images/icon-192x192.png">
+
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" as="style">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha256-2FMn2Zx6PuH5tdBQDRNwrOo60ts5wWPC9R8jK67b3t4=" crossorigin="anonymous" as="style">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css" integrity="sha256-4rTIfo5GQTi/7UJqoyUJQKzxW8VN/YBH31+Cy+vTZj4=" crossorigin="anonymous" as="style">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha256-5P1JGBOIxI7FBAvT/mb1fCnI5n/NhQKzNUuW7Hq0fMc=" crossorigin="anonymous" as="script">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha256-2FMn2Zx6PuH5tdBQDRNwrOo60ts5wWPC9R8jK67b3t4=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css" integrity="sha256-4rTIfo5GQTi/7UJqoyUJQKzxW8VN/YBH31+Cy+vTZj4=" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/admin.css">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha256-5P1JGBOIxI7FBAvT/mb1fCnI5n/NhQKzNUuW7Hq0fMc=" crossorigin="anonymous"></script>
+    <script src="./dist/owner.js"></script>
+</head>
+
+<body data-url="http://localhost:8000/">
+
+    <main class="container mt-4 mb-5">
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mt-4 mb-5 pt-1">
+            <h4 class="m-0 p-0 flex-grow-1 fw-bold">Jack Tech<i class="fa-solid fa-shield-halved text-primary ms-2"></i></h4>
+            <div class="m-0 p-0 flex-grow-1 text-end">
+                <button class="btn btn-secondary btn-sm rounded-4 shadow-sm" onclick="undangan.owner.theme.change()" aria-label="Change theme">
+                    <i class="fa-solid fa-circle-half-stroke"></i><span class="d-none d-sm-inline ms-2">Theme</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Owner Key -->
+        <div class="p-3 bg-theme-auto mb-4 rounded-4 shadow" id="section-key">
+            <p class="mx-0 mt-0 mb-2 p-0 fw-bold"><i class="fa-solid fa-key me-2"></i>Owner Key</p>
+            <div class="input-group input-group-sm mb-2">
+                <input type="password" class="form-control form-control-sm rounded-start-4 shadow-sm" id="owner-key" placeholder="Masukkan owner key" autocomplete="off">
+                <button class="btn btn-sm btn-outline-secondary rounded-end-4 shadow-sm" type="button" onclick="undangan.owner.toggleKeyVisibility()" aria-label="Toggle visibility">
+                    <i class="fa-solid fa-eye" id="owner-key-icon"></i>
+                </button>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-sm btn-primary rounded-4 shadow-sm" onclick="undangan.owner.saveKey(this)">Simpan</button>
+            </div>
+        </div>
+
+        <!-- Register New Client -->
+        <div class="p-3 bg-theme-auto mb-4 rounded-4 shadow" id="section-register" style="display:none;">
+            <p class="mx-0 mt-0 mb-2 p-0 fw-bold"><i class="fa-solid fa-user-plus me-2"></i>Daftar Klien Baru</p>
+            <form onsubmit="return false;">
+                <div class="mb-2">
+                    <input type="text" class="form-control form-control-sm rounded-4 shadow-sm" id="reg-name" minlength="1" maxlength="50" placeholder="Nama klien" required>
+                </div>
+                <div class="mb-2">
+                    <input type="email" class="form-control form-control-sm rounded-4 shadow-sm" id="reg-email" minlength="5" maxlength="55" placeholder="Email klien" required>
+                </div>
+                <div class="mb-2">
+                    <input type="text" class="form-control form-control-sm rounded-4 shadow-sm" id="reg-tz" placeholder="Timezone (default: Asia/Jakarta)" autocomplete="off">
+                </div>
+            </form>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-sm btn-success rounded-4 shadow-sm" onclick="undangan.owner.register(this)">
+                    <i class="fa-solid fa-plus me-1"></i>Daftarkan
+                </button>
+            </div>
+        </div>
+
+        <!-- Clients -->
+        <div class="p-3 bg-theme-auto mb-4 rounded-4 shadow" id="section-clients" style="display:none;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <p class="mx-0 my-0 p-0 fw-bold"><i class="fa-solid fa-users me-2"></i>Daftar Klien</p>
+                <button class="btn btn-sm btn-outline-secondary rounded-4 shadow-sm" onclick="undangan.owner.refreshClients()" aria-label="Refresh">
+                    <i class="fa-solid fa-rotate"></i>
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="small">#</th>
+                            <th scope="col" class="small">Nama</th>
+                            <th scope="col" class="small d-none d-sm-table-cell">Email</th>
+                            <th scope="col" class="small">Status</th>
+                            <th scope="col" class="small text-end">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clients-body">
+                        <tr>
+                            <td colspan="5" class="text-center text-muted small py-3">Memuat data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="p-3 bg-theme-auto mb-4 rounded-4 shadow">
+            <p class="mx-0 mt-0 mb-1 p-0 fw-bold"><i class="fa-solid fa-heart me-2"></i>Love Project</p>
+            <p class="m-0 p-0">Made with <i class="fa-solid fa-heart"></i> by <b>Jack Tech</b></p>
+        </div>
+    </main>
+
+    <!-- Modal Edit Client -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4">
+                <div class="modal-header">
+                    <h6 class="modal-title fw-bold" id="editModalLabel"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Klien</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="return false;">
+                        <div class="mb-2">
+                            <label for="edit-name" class="form-label small fw-semibold">Nama</label>
+                            <input type="text" class="form-control form-control-sm rounded-4 shadow-sm" id="edit-name" minlength="1" maxlength="50">
+                        </div>
+                        <div class="mb-2">
+                            <label for="edit-email" class="form-label small fw-semibold">Email</label>
+                            <input type="email" class="form-control form-control-sm rounded-4 shadow-sm" id="edit-email" minlength="5" maxlength="55">
+                        </div>
+                        <div class="mb-2">
+                            <label for="edit-password" class="form-label small fw-semibold">Password Baru (opsional)</label>
+                            <input type="text" class="form-control form-control-sm rounded-4 shadow-sm" id="edit-password" minlength="8" maxlength="20" placeholder="Kosongkan jika tidak diubah">
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" role="switch" id="edit-active">
+                            <label class="form-check-label" for="edit-active">Aktif</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary rounded-4 shadow-sm" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-sm btn-primary rounded-4 shadow-sm" onclick="undangan.owner.saveEdit(this)">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Register Result -->
+    <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4">
+                <div class="modal-header">
+                    <h6 class="modal-title fw-bold" id="resultModalLabel"><i class="fa-solid fa-circle-check text-success me-2"></i>Klien Terdaftar</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-2">
+                        <label class="form-label small fw-semibold">Nama</label>
+                        <input type="text" class="form-control form-control-sm rounded-4 shadow-sm" id="result-name" readonly>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small fw-semibold">Email</label>
+                        <input type="text" class="form-control form-control-sm rounded-4 shadow-sm" id="result-email" readonly>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small fw-semibold">Password</label>
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control form-control-sm rounded-start-4 shadow-sm" id="result-password" readonly>
+                            <button class="btn btn-sm btn-outline-secondary rounded-end-4 shadow-sm" type="button" data-copy="" onclick="undangan.owner.copy(this)" id="btn-copy-password"><i class="fa-solid fa-copy"></i></button>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small fw-semibold">Access Key</label>
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control form-control-sm rounded-start-4 shadow-sm" id="result-accesskey" readonly>
+                            <button class="btn btn-sm btn-outline-secondary rounded-end-4 shadow-sm" type="button" data-copy="" onclick="undangan.owner.copy(this)" id="btn-copy-accesskey"><i class="fa-solid fa-copy"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary rounded-4 shadow-sm" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
