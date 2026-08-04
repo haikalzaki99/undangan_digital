@@ -102,6 +102,7 @@ export const video = (() => {
             })).catch((err) => {
                 bar.style.backgroundColor = 'red';
                 inf.innerText = `Error loading video`;
+                progress.invalid('video');
                 console.error(err);
             });
         };

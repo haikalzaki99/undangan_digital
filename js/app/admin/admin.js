@@ -316,34 +316,41 @@ export const admin = (() => {
             util.notify('Masukkan nama tamu').warning();
             return null;
         }
-        return `${window.location.origin}/?to=${encodeURIComponent(name)}`;
+        const base = window.location.pathname.replace(/dashboard\.html$/i, '');
+        return `${window.location.origin}${base}?to=${encodeURIComponent(name)}`;
     };
 
     const invite = (() => {
 
         const template = [
-            "Assalamu'alaikum Warahmatullahi Wabarakatuh",
+            "Assalamu'alaikum Wr. Wb",
+            "Bismillahirahmanirrahim.",
             "",
-            "Maha Suci Allah yang telah menjadikan segala sesuatu",
-            "lebih indah dan sempurna.",
+            "Yth. (Nama)",
             "",
-            "Izinkan kami mengundang Bapak/Ibu/Sahabat sekalian",
-            "untuk dapat menghadiri acara pernikahan kami.",
+            "Tanpa mengurangi rasa hormat, perkenankan kami mengundang",
+            "Bapak/Ibu/Saudara/i, teman sekaligus sahabat, untuk",
+            "menghadiri acara pernikahan kami :",
             "",
-            "Link Undangan:",
+            "(Pasangan)",
             "",
-            "[Link]",
+            "Berikut link undangan kami untuk info lengkap dari acara",
+            "bisa kunjungi :",
             "",
-            "Note: Copy link kemudian paste di Chrome atau",
-            "Browser lain jika tidak bisa dibuka.",
+            "(Link)",
             "",
-            "Kehadiran, doa dan restu anda semua adalah kado",
-            "terindah bagi kami. Tiada yang dapat kami ungkapkan",
-            "selain rasa terimakasih dari hati yang tulus dan dalam.",
+            "Merupakan suatu kebahagiaan bagi kami apabila",
+            "Bapak/Ibu/Saudara/i berkenan untuk hadir dan",
+            "memberikan doa restu.",
             "",
-            "Kami yang berbahagia",
-            "Haris & Isti",
+            "Mohon maaf perihal undangan hanya di bagikan melalui",
+            "pesan ini. Terima kasih banyak atas perhatiannya.",
+            "",
+            "Wassalamu'alaikum Wr. Wb.",
+            "Terima Kasih.",
         ].join('\n');
+
+        const getGuestName = () => document.getElementById('form-guest-name')?.value?.trim() ?? '';
 
         return {
             /**
@@ -377,7 +384,11 @@ export const admin = (() => {
                     return;
                 }
 
-                const msg = template.replace('[Link]', link);
+                const couple = auth.getUserStorage().get('name') ?? '';
+                const msg = template
+                    .replace('(Nama)', getGuestName())
+                    .replace('(Pasangan)', couple)
+                    .replace('(Link)', link);
                 const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
                 window.open(url, '_blank');
             },
