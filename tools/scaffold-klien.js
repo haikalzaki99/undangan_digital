@@ -5,12 +5,15 @@
  *
  * Daftarkan klien via API owner, lalu generate folder clients/{slug}/ berisi
  * index.html + dashboard.html dengan data-key & data-url sesuai klien.
+ * Folder assets/images/ ikut disalin ke clients/{slug}/assets/images/ sehingga
+ * setiap klien punya foto/gambar sendiri; musik & video tetap global.
  *
  * Usage:
  *   node tools/scaffold-klien.js "Nama Klien" <email> [password] [--env=local|prod]
  *
  *   --env=local  -> API http://localhost:8000/  , web http://localhost:8080/  (default)
  *   --env=prod   -> API https://jacktech-api.vercel.app/ , web https://jacktech-web.vercel.app/
+ *                   (sesuaikan dengan URL hosting asli jika berbeda)
  */
 
 const fs = require('fs');
@@ -77,8 +80,10 @@ const slugify = (str) => String(str)
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 
-const rewritePaths = (html) => html
-    .replaceAll('./assets/', '/assets/')
+const rewritePaths = (html, slug) => html
+    .replaceAll('./assets/images/', `/clients/${slug}/assets/images/`)
+    .replaceAll('./assets/music/', '/assets/music/')
+    .replaceAll('./assets/video/', '/assets/video/')
     .replaceAll('./css/', '/css/')
     .replaceAll('./dist/', '/dist/');
 
@@ -124,6 +129,11 @@ const scaffold = async () => {
     log(`[2/4] Membuat folder ${path.relative(ROOT, dir)} ...`);
     fs.mkdirSync(dir, { recursive: true });
 
+    const imagesDir = path.join(dir, 'assets', 'images');
+    fs.mkdirSync(imagesDir, { recursive: true });
+    log('      Menyalin assets/images ke klien ...');
+    fs.cpSync(path.join(ROOT, 'assets', 'images'), imagesDir, { recursive: true });
+
     const files = ['index.html', 'dashboard.html'];
 
     log('[3/4] Menyalin & mengonfigurasi halaman klien ...');
@@ -137,7 +147,7 @@ const scaffold = async () => {
         }
 
         let html = fs.readFileSync(src, 'utf8');
-        html = rewritePaths(html);
+        html = rewritePaths(html, slug);
         html = setDataKey(html, client.access_key);
         html = setDataUrl(html, DATA_URL[ENV]);
         fs.writeFileSync(dst, html);
