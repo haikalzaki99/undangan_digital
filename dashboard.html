@@ -348,6 +348,23 @@
                             </div>
                         </div>
 
+                        <!-- Kirim Undangan -->
+                        <div class="p-3 bg-theme-auto mb-3 rounded-4 shadow">
+                            <p class="mx-0 mt-0 mb-1 p-0 fw-bold"><i class="fa-solid fa-paper-plane me-2"></i>Kirim Undangan</p>
+                            <p class="mx-0 mt-0 mb-2 p-0 small text-muted">Generate link undangan untuk tamu</p>
+
+                            <div class="input-group input-group-sm mb-3">
+                                <input type="text" class="form-control form-control-sm rounded-start-4 shadow-sm" id="form-guest-name" placeholder="Nama tamu..." data-offline-disabled="false">
+                                <button class="btn btn-sm btn-outline-secondary rounded-end-4 shadow-sm" type="button" onclick="undangan.admin.invite.copyLink(this)" data-offline-disabled="false"><i class="fa-solid fa-copy"></i></button>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-success rounded-4 shadow-sm flex-grow-1" onclick="undangan.admin.invite.shareWhatsApp()" data-offline-disabled="false">
+                                    <i class="fa-brands fa-whatsapp me-1"></i>WhatsApp
+                                </button>
+                            </div>
+                        </div>
+
                         <!-- Change Password -->
                         <div class="p-3 bg-theme-auto mb-3 rounded-4 shadow">
                             <p class="mx-0 mt-0 mb-1 p-0 fw-bold"><i class="fa-solid fa-lock me-2"></i>Change Password</p>

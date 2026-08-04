@@ -308,6 +308,83 @@ export const admin = (() => {
     };
 
     /**
+     * @returns {string|null}
+     */
+    const getInviteLink = () => {
+        const name = document.getElementById('form-guest-name')?.value?.trim();
+        if (!name) {
+            util.notify('Masukkan nama tamu').warning();
+            return null;
+        }
+        return `${window.location.origin}/?to=${encodeURIComponent(name)}`;
+    };
+
+    const invite = (() => {
+
+        const template = [
+            "Assalamu'alaikum Warahmatullahi Wabarakatuh",
+            "",
+            "Maha Suci Allah yang telah menjadikan segala sesuatu",
+            "lebih indah dan sempurna.",
+            "",
+            "Izinkan kami mengundang Bapak/Ibu/Sahabat sekalian",
+            "untuk dapat menghadiri acara pernikahan kami.",
+            "",
+            "Link Undangan:",
+            "",
+            "[Link]",
+            "",
+            "Note: Copy link kemudian paste di Chrome atau",
+            "Browser lain jika tidak bisa dibuka.",
+            "",
+            "Kehadiran, doa dan restu anda semua adalah kado",
+            "terindah bagi kami. Tiada yang dapat kami ungkapkan",
+            "selain rasa terimakasih dari hati yang tulus dan dalam.",
+            "",
+            "Kami yang berbahagia",
+            "Haris & Isti",
+        ].join('\n');
+
+        return {
+            /**
+             * @param {HTMLButtonElement} button
+             * @returns {void}
+             */
+            copyLink(button) {
+                const link = getInviteLink();
+                if (!link) {
+                    return;
+                }
+
+                navigator.clipboard.writeText(link).then(() => {
+                    const tmp = button.innerHTML;
+                    util.safeInnerHTML(button, '<i class="fa-solid fa-check"></i>');
+
+                    setTimeout(() => {
+                        button.innerHTML = tmp;
+                    }, 1500);
+
+                    util.notify('Link copied!').success();
+                }).catch(() => util.notify('Gagal copy link').error());
+            },
+
+            /**
+             * @returns {void}
+             */
+            shareWhatsApp() {
+                const link = getInviteLink();
+                if (!link) {
+                    return;
+                }
+
+                const msg = template.replace('[Link]', link);
+                const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+                window.open(url, '_blank');
+            },
+        };
+    })();
+
+    /**
      * @returns {void}
      */
     const pageLoaded = () => {
@@ -356,6 +433,7 @@ export const admin = (() => {
                 auth,
                 navbar,
                 logout,
+                invite,
                 tenor,
                 download,
                 regenerate,
