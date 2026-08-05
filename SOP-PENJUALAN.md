@@ -117,11 +117,18 @@ Ketentuan umum:
 
 > ⚠️ Bagian ini untuk tim teknis, bukan untuk dikirim ke klien.
 
+- **Link produksi saat ini** (perbarui bila nanti dipasang domain kustom):
+  - Panel Owner: `https://undangan-digital-delta-wine.vercel.app/owner.html` — akses memakai `OWNER_KEY` yang sama dengan di `../undangan-api/.env` (jangan share/nilai ke klien).
+  - Web utama: `https://undangan-digital-delta-wine.vercel.app/`
+  - API: `https://undangan-api-six-ashen.vercel.app/`
+  - Halaman tamu: `https://undangan-digital-delta-wine.vercel.app/clients/{slug}/`
+  - Dashboard klien: `https://undangan-digital-delta-wine.vercel.app/clients/{slug}/dashboard.html`
+
 - **Daftar + buat halaman klien** (akun DB + halaman sekaligus):
   ```bash
   node tools/scaffold-klien.js "Nama Klien" email@klien.com <password> --env=prod
   ```
-  Catatan: scaffold mendaftarkan klien via API owner **dan** membuat `clients/{slug}/` + menyalin `assets/images/`. URL default produksi di `tools/scaffold-klien.js` (`WEB_BASE`, `DATA_URL`) — sesuaikan bila domain berubah.
+  Catatan: scaffold mendaftarkan klien via API owner **dan** membuat `clients/{slug}/` + menyalin `assets/images/`. Owner key dibaca otomatis dari `../undangan-api/.env`. URL default produksi sudah terset di `tools/scaffold-klien.js` (`WEB_BASE`, `DATA_URL`) — sesuaikan bila domain berubah.
 
 - **Edit konten per klien** di `clients/{slug}/index.html`:
   - Countdown: `data-time="YYYY-MM-DD HH:mm:ss"` di `<body>`.
@@ -136,6 +143,6 @@ Ketentuan umum:
   ```
   Folder `public/` adalah hasil deploy. Push ke GitHub → Vercel auto-deploy.
 
-- **Verifikasi**: buka `https://<domain>/clients/{slug}/?to=Nama` (halaman tamu) dan `.../clients/{slug}/dashboard.html` (dashboard klien). Pastikan semua gambar & musik termuat dan countdown berjalan.
+- **Verifikasi**: buka `https://undangan-digital-delta-wine.vercel.app/clients/{slug}/?to=Nama` (halaman tamu) dan `https://undangan-digital-delta-wine.vercel.app/clients/{slug}/dashboard.html` (dashboard klien). Pastikan semua gambar & musik termuat dan countdown berjalan.
 
-- **Reset password / nonaktifkan / hapus klien**: lakukan via `owner.html` (panel owner).
+- **Reset password / nonaktifkan / hapus klien**: lakukan via panel owner `https://undangan-digital-delta-wine.vercel.app/owner.html`.
