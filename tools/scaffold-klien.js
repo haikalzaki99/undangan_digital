@@ -12,8 +12,7 @@
  *   node tools/scaffold-klien.js "Nama Klien" <email> [password] [--env=local|prod]
  *
  *   --env=local  -> API http://localhost:8000/  , web http://localhost:8080/  (default)
- *   --env=prod   -> API https://jacktech-api.vercel.app/ , web https://jacktech-web.vercel.app/
- *                   (sesuaikan dengan URL hosting asli jika berbeda)
+ *   --env=prod   -> API https://undangan-api-six-ashen.vercel.app/ , web https://undangan-digital-delta-wine.vercel.app/
  */
 
 const fs = require('fs');
@@ -27,17 +26,17 @@ const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 
 const DATA_URL = {
     local: 'http://localhost:8000/',
-    prod: 'https://jacktech-api.vercel.app/',
+    prod: 'https://undangan-api-six-ashen.vercel.app/',
 };
 
 const API_BASE = {
     local: 'http://localhost:8000/',
-    prod: 'https://jacktech-api.vercel.app/',
+    prod: 'https://undangan-api-six-ashen.vercel.app/',
 };
 
 const WEB_BASE = {
     local: 'http://localhost:8080/',
-    prod: 'https://jacktech-web.vercel.app/',
+    prod: 'https://undangan-digital-delta-wine.vercel.app/',
 };
 
 const args = process.argv.slice(2);

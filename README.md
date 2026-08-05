@@ -129,12 +129,12 @@ npm run build:public # build + salin ke folder public/ (hasil siap deploy)
 2. Pengaturan: Framework Preset `Other`, Build Command `npm run build:public`, Output Directory `public/`.
 3. Setiap push otomatis ter-deploy (produksi & preview).
 
-Contoh URL (ganti dengan domain asli):
+Contoh URL:
 
 | Lingkungan | Frontend | API |
 |------------|----------|-----|
 | local | `http://localhost:8080/` | `http://localhost:8000/` |
-| prod | `https://jacktech-web.vercel.app/` | `https://jacktech-api.vercel.app/` |
+| prod | `https://undangan-digital-delta-wine.vercel.app/` | `https://undangan-api-six-ashen.vercel.app/` |
 
 Untuk klien baru di produksi, jalankan scaffold dengan `--env=prod` (sesuaikan `WEB_BASE` di `tools/scaffold-klien.js` bila domain berbeda).
 
