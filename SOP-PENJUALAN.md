@@ -146,3 +146,9 @@ Ketentuan umum:
 - **Verifikasi**: buka `https://undangan-digital-delta-wine.vercel.app/clients/{slug}/?to=Nama` (halaman tamu) dan `https://undangan-digital-delta-wine.vercel.app/clients/{slug}/dashboard.html` (dashboard klien). Pastikan semua gambar & musik termuat dan countdown berjalan.
 
 - **Reset password / nonaktifkan / hapus klien**: lakukan via panel owner `https://undangan-digital-delta-wine.vercel.app/owner.html`.
+
+- **Cek status produksi** (API + DB, owner key, web, semua halaman klien):
+  ```bash
+  node tools/health-check.js   # exit code 0 = semua OK
+  ```
+  Checklist berkala, backup DB, rotasi kunci, dan troubleshooting: **`MAINTENANCE.md`**.

@@ -34,7 +34,8 @@ undangan-digital/
 ├── js/                 # Source JS (di-bundle ke dist/)
 ├── dist/               # Hasil bundle esbuild (guest.js, admin.js, owner.js)
 └── tools/
-    └── scaffold-klien.js  # Alat daftar klien + generate halaman
+    ├── scaffold-klien.js  # Alat daftar klien + generate halaman
+    └── health-check.js    # Cek status produksi (API+DB, owner key, halaman klien)
 ```
 
 Backend API (`undangan-api`) terhubung lewat dua atribut di elemen `<body>`:
@@ -137,6 +138,19 @@ Contoh URL:
 | prod | `https://undangan-digital-delta-wine.vercel.app/` | `https://undangan-api-six-ashen.vercel.app/` |
 
 Untuk klien baru di produksi, jalankan scaffold dengan `--env=prod` (sesuaikan `WEB_BASE` di `tools/scaffold-klien.js` bila domain berbeda).
+
+## 🩺 Maintenance & Health Check
+
+Cek status produksi (API + koneksi database, validitas owner key, web utama, dan semua halaman klien) dengan satu perintah:
+
+```bash
+node tools/health-check.js          # prod (default)
+node tools/health-check.js --env=local
+```
+
+Exit code `0` = semua PASS, `1` = ada yang gagal. Alat ini **read-only** (hanya GET request, tidak mengubah apa pun).
+
+Checklist berkala, prosedur backup DB, rotasi kunci, dan troubleshooting lengkap ada di **`MAINTENANCE.md`**.
 
 ## 🔗 Link Penting
 
