@@ -5,7 +5,14 @@ export const storage = (table) => {
      * @returns {any}
      */
     const get = (key = null) => {
-        const data = JSON.parse(localStorage.getItem(table));
+        let data = {};
+
+        try {
+            data = JSON.parse(localStorage.getItem(table)) ?? {};
+        } catch {
+            data = {};
+        }
+
         return key ? data[String(key)] : data;
     };
 

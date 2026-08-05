@@ -61,12 +61,14 @@ export const gif = (() => {
             }
 
             const res = (uri) => {
+                const safeUuid = util.escapeHtml(ctx.uuid);
+                const safeId = util.escapeHtml(id);
                 el.insertAdjacentHTML('beforeend', `
                 <figure class="hover-wrapper m-0 position-relative">
-                    <button onclick="undangan.comment.gif.click(this, '${ctx.uuid}', '${id}', '${util.base64Encode(url)}')" class="btn hover-area position-absolute justify-content-center align-items-center top-0 end-0 bg-overlay-auto p-1 m-1 rounded-circle border shadow-sm z-1">
+                    <button onclick="undangan.comment.gif.click(this, '${safeUuid}', '${safeId}', '${util.base64Encode(url)}')" class="btn hover-area position-absolute justify-content-center align-items-center top-0 end-0 bg-overlay-auto p-1 m-1 rounded-circle border shadow-sm z-1">
                         <i class="fa-solid fa-circle-check"></i>
                     </button>
-                    <img src="${uri}" class="img-fluid" alt="${util.escapeHtml(description)}" style="width: 100%;">
+                    <img src="${util.escapeHtml(uri)}" class="img-fluid" alt="${util.escapeHtml(description)}" style="width: 100%;">
                 </figure>`);
 
                 load?.step();

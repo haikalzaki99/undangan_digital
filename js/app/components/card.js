@@ -51,8 +51,10 @@ export const card = (() => {
      * @returns {string}
      */
     const renderLike = (c) => {
+        const uuid = util.escapeHtml(c.uuid);
+
         return `
-        <button style="font-size: 0.8rem;" onclick="undangan.comment.like.love(this)" data-uuid="${c.uuid}" class="btn btn-sm btn-outline-auto ms-auto rounded-3 p-0 shadow-sm d-flex justify-content-start align-items-center" data-offline-disabled="false">
+        <button style="font-size: 0.8rem;" onclick="undangan.comment.like.love(this)" data-uuid="${uuid}" class="btn btn-sm btn-outline-auto ms-auto rounded-3 p-0 shadow-sm d-flex justify-content-start align-items-center" data-offline-disabled="false">
             <span class="my-0 mx-1" data-count-like="${c.like_count}">${c.like_count}</span>
             <i class="me-1 ${likes.has(c.uuid) ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'}"></i>
         </button>`;
@@ -63,22 +65,25 @@ export const card = (() => {
      * @returns {string}
      */
     const renderAction = (c) => {
-        let action = `<div class="d-flex justify-content-start align-items-center" data-button-action="${c.uuid}">`;
+        const uuid = util.escapeHtml(c.uuid);
+        const own = util.escapeHtml(c.own);
+
+        let action = `<div class="d-flex justify-content-start align-items-center" data-button-action="${uuid}">`;
 
         if (config.get('can_reply') !== false) {
-            action += `<button style="font-size: 0.8rem;" onclick="undangan.comment.reply('${c.uuid}')" class="btn btn-sm btn-outline-auto rounded-4 py-0 me-1 shadow-sm" data-offline-disabled="false">Reply</button>`;
+            action += `<button style="font-size: 0.8rem;" onclick="undangan.comment.reply('${uuid}')" class="btn btn-sm btn-outline-auto rounded-4 py-0 me-1 shadow-sm" data-offline-disabled="false">Reply</button>`;
         }
 
         if (session.isAdmin() && c.is_admin && (!c.gif_url || gif.isActive())) {
-            action += `<button style="font-size: 0.8rem;" onclick="undangan.comment.edit(this, ${c.is_parent ? 'true' : 'false'})" data-uuid="${c.uuid}" class="btn btn-sm btn-outline-auto rounded-4 py-0 me-1 shadow-sm" data-own="${c.own}" data-offline-disabled="false">Edit</button>`;
+            action += `<button style="font-size: 0.8rem;" onclick="undangan.comment.edit(this, ${c.is_parent ? 'true' : 'false'})" data-uuid="${uuid}" class="btn btn-sm btn-outline-auto rounded-4 py-0 me-1 shadow-sm" data-own="${own}" data-offline-disabled="false">Edit</button>`;
         } else if (owns.has(c.uuid) && config.get('can_edit') !== false && (!c.gif_url || gif.isActive())) {
-            action += `<button style="font-size: 0.8rem;" onclick="undangan.comment.edit(this, ${c.is_parent ? 'true' : 'false'})" data-uuid="${c.uuid}" class="btn btn-sm btn-outline-auto rounded-4 py-0 me-1 shadow-sm" data-offline-disabled="false">Edit</button>`;
+            action += `<button style="font-size: 0.8rem;" onclick="undangan.comment.edit(this, ${c.is_parent ? 'true' : 'false'})" data-uuid="${uuid}" class="btn btn-sm btn-outline-auto rounded-4 py-0 me-1 shadow-sm" data-offline-disabled="false">Edit</button>`;
         }
 
         if (session.isAdmin()) {
-            action += `<button style="font-size: 0.8rem;" onclick="undangan.comment.remove(this)" data-uuid="${c.uuid}" class="btn btn-sm btn-outline-auto rounded-4 py-0 me-1 shadow-sm" data-own="${c.own}" data-offline-disabled="false">Delete</button>`;
+            action += `<button style="font-size: 0.8rem;" onclick="undangan.comment.remove(this)" data-uuid="${uuid}" class="btn btn-sm btn-outline-auto rounded-4 py-0 me-1 shadow-sm" data-own="${own}" data-offline-disabled="false">Delete</button>`;
         } else if (owns.has(c.uuid) && config.get('can_delete') !== false) {
-            action += `<button style="font-size: 0.8rem;" onclick="undangan.comment.remove(this)" data-uuid="${c.uuid}" class="btn btn-sm btn-outline-auto rounded-4 py-0 me-1 shadow-sm" data-offline-disabled="false">Delete</button>`;
+            action += `<button style="font-size: 0.8rem;" onclick="undangan.comment.remove(this)" data-uuid="${uuid}" class="btn btn-sm btn-outline-auto rounded-4 py-0 me-1 shadow-sm" data-offline-disabled="false">Delete</button>`;
         }
 
         action += '</div>';
@@ -103,8 +108,10 @@ export const card = (() => {
      * @returns {string}
      */
     const renderButton = (c) => {
+        const uuid = util.escapeHtml(c.uuid);
+
         return `
-        <div class="d-flex justify-content-between align-items-center" id="button-${c.uuid}">
+        <div class="d-flex justify-content-between align-items-center" id="button-${uuid}">
             ${renderAction(c)}
             ${c.comments.length > 0 ? renderReadMore(c.uuid, c.comments.map((i) => i.uuid)) : ''}
             ${renderLike(c)}
@@ -120,9 +127,11 @@ export const card = (() => {
             return '';
         }
 
+        const uuid = util.escapeHtml(c.uuid);
+
         return `
         <div class="mb-1 mt-3">
-            <p class="text-theme-auto mb-1 mx-0 mt-0 p-0" style="font-size: 0.7rem;" id="ip-${c.uuid}"><i class="fa-solid fa-location-dot me-1"></i>${util.escapeHtml(c.ip)} <span class="mb-1 placeholder col-2 rounded-3"></span></p>
+            <p class="text-theme-auto mb-1 mx-0 mt-0 p-0" style="font-size: 0.7rem;" id="ip-${uuid}"><i class="fa-solid fa-location-dot me-1"></i>${util.escapeHtml(c.ip)} <span class="mb-1 placeholder col-2 rounded-3"></span></p>
             <p class="text-theme-auto m-0 p-0" style="font-size: 0.7rem;"><i class="fa-solid fa-mobile-screen-button me-1"></i>${util.parseUserAgent(util.escapeHtml(c.user_agent))}</p>
         </div>`;
     };
@@ -144,12 +153,14 @@ export const card = (() => {
      * @returns {string}
      */
     const renderTitle = (c) => {
+        const uuid = util.escapeHtml(c.uuid);
+
         if (c.is_admin) {
             return `<strong class="me-1">${util.escapeHtml(c.name)}</strong><i class="fa-solid fa-certificate text-primary"></i>`;
         }
 
         if (c.is_parent) {
-            return `<strong class="me-1">${util.escapeHtml(c.name)}</strong><i id="badge-${c.uuid}" data-is-presence="${c.presence ? 'true' : 'false'}" class="fa-solid ${c.presence ? 'fa-circle-check text-success' : 'fa-circle-xmark text-danger'}"></i>`;
+            return `<strong class="me-1">${util.escapeHtml(c.name)}</strong><i id="badge-${uuid}" data-is-presence="${c.presence ? 'true' : 'false'}" class="fa-solid ${c.presence ? 'fa-circle-check text-success' : 'fa-circle-xmark text-danger'}"></i>`;
         }
 
         return `<strong>${util.escapeHtml(c.name)}</strong>`;
@@ -160,6 +171,8 @@ export const card = (() => {
      * @returns {Promise<string>}
      */
     const renderBody = async (c) => {
+        const uuid = util.escapeHtml(c.uuid);
+
         const head = `
         <div class="d-flex justify-content-between align-items-center">
             <p class="text-theme-auto text-truncate m-0 p-0" style="font-size: 0.95rem;">${renderTitle(c)}</p>
@@ -170,7 +183,7 @@ export const card = (() => {
         if (c.gif_url) {
             return head + `
             <div class="d-flex justify-content-center align-items-center my-2">
-                <img src="${await gif.get(c.gif_url)}" id="img-gif-${c.uuid}" class="img-fluid mx-auto gif-image rounded-4" alt="selected-gif">
+                <img src="${util.escapeHtml(await gif.get(c.gif_url))}" id="img-gif-${uuid}" class="img-fluid mx-auto gif-image rounded-4" alt="selected-gif">
             </div>`;
         }
 
@@ -178,8 +191,8 @@ export const card = (() => {
         const data = util.convertMarkdownToHTML(util.escapeHtml(moreMaxLength ? (c.comment.slice(0, maxCommentLength) + '...') : c.comment));
 
         return head + `
-        <p dir="auto" class="text-theme-auto my-1 mx-0 p-0" style="white-space: pre-wrap !important; font-size: 0.95rem;" data-comment="${util.base64Encode(c.comment)}" id="content-${c.uuid}">${data}</p>
-        ${moreMaxLength ? `<p class="d-block mb-2 mt-0 mx-0 p-0"><a class="text-theme-auto" role="button" style="font-size: 0.85rem;" data-show="false" onclick="undangan.comment.showMore(this, '${c.uuid}')">Selengkapnya</a></p>` : ''}`;
+        <p dir="auto" class="text-theme-auto my-1 mx-0 p-0" style="white-space: pre-wrap !important; font-size: 0.95rem;" data-comment="${util.base64Encode(c.comment)}" id="content-${uuid}">${data}</p>
+        ${moreMaxLength ? `<p class="d-block mb-2 mt-0 mx-0 p-0"><a class="text-theme-auto" role="button" style="font-size: 0.85rem;" data-show="false" onclick="undangan.comment.showMore(this, '${uuid}')">Selengkapnya</a></p>` : ''}`;
     };
 
     /**
@@ -187,15 +200,16 @@ export const card = (() => {
      * @returns {Promise<string>}
      */
     const renderContent = async (c) => {
+        const uuid = util.escapeHtml(c.uuid);
         const body = await renderBody(c);
         const resData = await Promise.all(c.comments.map((cmt) => renderContent(cmt)));
 
         return `
-        <div ${renderHeader(c)} id="${c.uuid}" style="overflow-wrap: break-word !important;">
-            <div id="body-content-${c.uuid}" data-tapTime="0" data-liked="false" tabindex="0">${body}</div>
+        <div ${renderHeader(c)} id="${uuid}" style="overflow-wrap: break-word !important;">
+            <div id="body-content-${uuid}" data-tapTime="0" data-liked="false" tabindex="0">${body}</div>
             ${renderTracker(c)}
             ${renderButton(c)}
-            <div id="reply-content-${c.uuid}">${resData.join('')}</div>
+            <div id="reply-content-${uuid}">${resData.join('')}</div>
         </div>`;
     };
 
