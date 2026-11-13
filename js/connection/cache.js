@@ -59,6 +59,17 @@ export const cache = (cacheName) => {
 
     return Promise.race([p, timeout]).finally(() => clearTimeout(timer));
   };
+
+  const isExternal = (url) => {
+    try {
+      return (
+        new URL(url, window.location.href).origin !== window.location.origin
+      );
+    } catch {
+      return false;
+    }
+  };
+
   /**
    * @param {string} input
    * @param {Promise<void>|null} [cancel=null]
@@ -79,7 +90,7 @@ export const cache = (cacheName) => {
     const fetchPut = () =>
       withTimeout(
         request(HTTP_GET, input).withCancel(cancel).withRetry().default(),
-        8000,
+        isExternal(input) ? 3000 : 15000,
       );
     const inflightPromise = has(input)
       .then((res) =>
