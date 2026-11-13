@@ -49,15 +49,17 @@ export const image = (() => {
      * @returns {void}
      */
     const getByFetch = (el) => {
-        urlCache.push({
-            url: el.getAttribute('data-src'),
-            res: (url) => appendImage(el, url),
-            rej: (err) => {
-                console.error(err);
-                progress.invalid('image');
-            },
-        });
-    };
+    urlCache.push({
+        url: el.getAttribute('data-src'),
+        res: (url) => appendImage(el, url),
+        rej: (err) => {
+            console.error(err);
+            el.src = 'assets/images/placeholder.webp'; // fallback lokal
+            el.classList.remove('opacity-0');
+            progress.invalid('image');
+        },
+    });
+};
 
     /**
      * @param {HTMLImageElement} el 
