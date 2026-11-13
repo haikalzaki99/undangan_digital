@@ -56,7 +56,7 @@ export const image = (() => {
             console.error(err);
             el.src = 'assets/images/placeholder.webp'; // fallback lokal
             el.classList.remove('opacity-0');
-            progress.invalid('image');
+            progress.complete('image', true);          // skip, bukan invalid
         },
     });
 };
@@ -66,7 +66,7 @@ export const image = (() => {
      * @returns {void}
      */
     const getByDefault = (el) => {
-        el.onerror = () => progress.invalid('image');
+        el.onerror = () => progress.complete('image', true);
         el.onload = () => {
             el.width = el.naturalWidth;
             el.height = el.naturalHeight;
@@ -76,8 +76,8 @@ export const image = (() => {
         if (el.complete && el.naturalWidth !== 0 && el.naturalHeight !== 0) {
             progress.complete('image');
         } else if (el.complete) {
-            progress.invalid('image');
-        }
+    progress.complete('image', true);
+}
     };
 
     /**
